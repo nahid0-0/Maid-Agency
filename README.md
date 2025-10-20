@@ -156,7 +156,7 @@ cd Maid-Agency
 ### 2. Install Dependencies
 
 ```bash
-composer install
+composer install --no-dev --optimize-autoloader
 ```
 
 ### 3. Configure Environment

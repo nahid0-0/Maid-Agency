@@ -1,0 +1,16 @@
+{
+    "name": "maid-agency/management-system",
+    "description": "Maid Agency Management System with AWS S3 Integration",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "aws/aws-sdk-php": "^3.356"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
