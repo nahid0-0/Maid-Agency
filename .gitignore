@@ -1,0 +1,11 @@
+# Composer dependencies
+/vendor/
+
+# Environment configuration
+.env
+
+# Log files
+/logs/
+
+# User uploads
+/uploads/
