@@ -31,6 +31,10 @@ define('DB_SSL_CA', EnvLoader::get('DB_SSL_CA', ''));
 define('APP_NAME', EnvLoader::get('APP_NAME', 'MaidMate'));
 define('APP_COMPANY', EnvLoader::get('APP_COMPANY', 'MaidMate'));
 define('APP_TAGLINE', EnvLoader::get('APP_TAGLINE', 'Professional Home Care & Domestic Services'));
+define('APP_CONTACT_PERSON', EnvLoader::get('APP_CONTACT_PERSON', 'Rofidul Hasan Ovik'));
+define('APP_CONTACT_PHONE', EnvLoader::get('APP_CONTACT_PHONE', '01902440284'));
+define('APP_CONTACT_EMAIL', EnvLoader::get('APP_CONTACT_EMAIL', 'rofidul15-14160@diu.edu.bd'));
+define('APP_CONTACT_ADDRESS', EnvLoader::get('APP_CONTACT_ADDRESS', 'Mirpur 1, Uttor Tularbag, Dhaka'));
 define('APP_ENV', EnvLoader::get('APP_ENV', 'development')); // development, production
 define('APP_DEBUG', EnvLoader::get('APP_DEBUG', 'true') === 'true');
 

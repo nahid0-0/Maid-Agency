@@ -21,7 +21,7 @@ ob_start();
         <nav class="header-nav">
             <a href="#about" class="nav-link-header">About</a>
             <a href="#portals" class="nav-link-header">Portals</a>
-            <a href="#faq" class="nav-link-header">FAQ</a>
+            <a href="#contact" class="nav-link-header">Contact</a>
             <a href="/client/login" class="nav-cta-header">Client Portal →</a>
         </nav>
     </div>
@@ -120,11 +120,14 @@ ob_start();
                 </ul>
             </div>
 
-            <div class="footer-section-landing" id="faq">
-                <h3>Staff & Admin</h3>
-                <ul class="footer-links-landing">
-                    <li><a href="/staff/login">Staff Management Console</a></li>
-                </ul>
+            <div class="footer-section-landing" id="contact">
+                <h3>Contact & Office</h3>
+                <div style="font-size: 0.875rem; color: #94a3b8; line-height: 1.8;">
+                    <p style="color: #ffffff; font-weight: 600; margin-bottom: 4px;"><?= htmlspecialchars(defined('APP_CONTACT_PERSON') ? APP_CONTACT_PERSON : 'Rofidul Hasan Ovik') ?></p>
+                    <p style="margin-bottom: 4px;">📍 <?= htmlspecialchars(defined('APP_CONTACT_ADDRESS') ? APP_CONTACT_ADDRESS : 'Mirpur 1, Uttor Tularbag, Dhaka') ?></p>
+                    <p style="margin-bottom: 4px;">📞 <a href="tel:01902440284" style="color: #cbd5e1; text-decoration: none;">01902440284</a></p>
+                    <p style="margin-bottom: 4px;">✉️ <a href="mailto:rofidul15-14160@diu.edu.bd" style="color: #cbd5e1; text-decoration: none;">rofidul15-14160@diu.edu.bd</a></p>
+                </div>
             </div>
         </div>
 

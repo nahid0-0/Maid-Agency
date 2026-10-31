@@ -11,6 +11,14 @@ services:
         value: MaidMate
       - key: APP_COMPANY
         value: MaidMate
+      - key: APP_CONTACT_PERSON
+        value: "Rofidul Hasan Ovik"
+      - key: APP_CONTACT_PHONE
+        value: "01902440284"
+      - key: APP_CONTACT_EMAIL
+        value: "rofidul15-14160@diu.edu.bd"
+      - key: APP_CONTACT_ADDRESS
+        value: "Mirpur 1, Uttor Tularbag, Dhaka"
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
