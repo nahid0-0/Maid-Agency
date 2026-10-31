@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <defs>
+    <linearGradient id="mmGradW" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="sparkleGradW" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#818CF8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Emblem Icon -->
+  <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#mmGradW)" />
+  <path d="M14 31V21L24 13L34 21V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M19 31V23L24 27L29 23V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M36 10C36 12 37.5 13.5 39.5 13.5C37.5 13.5 36 15 36 17C36 15 34.5 13.5 32.5 13.5C34.5 13.5 36 12 36 10Z" fill="url(#sparkleGradW)"/>
+
+  <!-- Wordmark in White -->
+  <text x="56" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" letter-spacing="-0.5" fill="#FFFFFF">
+    Maid<tspan fill="#818CF8">Mate</tspan>
+  </text>
+</svg>

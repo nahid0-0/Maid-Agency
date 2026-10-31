@@ -2,44 +2,69 @@
 ob_start();
 ?>
 
-<div class="login-page">
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <h1>👨‍👩‍👧‍👦 Client Login</h1>
-                <p>Access your account to find domestic help</p>
+<div class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="/" class="auth-brand">
+                    <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+                        <defs>
+                            <linearGradient id="clientLogoGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#4F46E5"/>
+                                <stop offset="1" stop-color="#2563EB"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#clientLogoGrad)" />
+                        <path d="M14 31V21L24 13L34 21V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19 31V23L24 27L29 23V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="brand-text">Maid<span class="brand-accent">Mate</span></span>
+                </a>
+                <div class="role-pill">Client Portal</div>
+                <h1 class="auth-title">Welcome back</h1>
+                <p class="auth-subtitle">Sign in to manage your helpers and requests</p>
             </div>
             
             <?php if (isset($_GET['error'])): ?>
-                <div class="error-message" style="display: block;">
+                <div class="auth-alert alert-error">
                     <?= htmlspecialchars($_GET['error']) ?>
                 </div>
             <?php endif; ?>
 
             <?php if (isset($_GET['success'])): ?>
-                <div class="success-message" style="display: block; background: #d4edda; color: #155724; padding: 12px; border-radius: 6px; font-size: 14px; margin-bottom: 20px;">
+                <div class="auth-alert alert-success">
                     <?= htmlspecialchars($_GET['success']) ?>
                 </div>
             <?php endif; ?>
 
-            <form id="loginForm" class="login-form" action="/client/authenticate" method="POST">
+            <div class="error-message" id="asyncError" style="display: none;"></div>
+
+            <form id="loginForm" class="auth-form" action="/client/authenticate" method="POST">
                 <input type="hidden" name="csrf_token" value="<?= (new Core\Session())->getCsrfToken() ?>">
 
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" name="email" placeholder="name@example.com" required autocomplete="email">
                 </div>
                 
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
+                    <div class="label-row">
+                        <label for="password">Password</label>
+                    </div>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
                 </div>
                 
-                <button type="submit" class="btn-login">Login</button>
+                <button type="submit" class="btn-primary">Sign in</button>
                 
-                <div class="form-footer">
-                    <p>Don't have an account? <a href="/client/signup">Sign up here</a></p>
-                    <p><a href="/">← Back to role selection</a></p>
+                <div class="auth-footer">
+                    <p class="signup-prompt">Don't have an account? <a href="/client/signup">Create one</a></p>
+                    <div class="role-switcher">
+                        <span>Not a client?</span>
+                        <a href="/maid/login">Helper sign in</a>
+                        <span class="dot">•</span>
+                        <a href="/staff/login">Staff sign in</a>
+                    </div>
+                    <a href="/" class="back-home">← Back to home</a>
                 </div>
             </form>
         </div>
@@ -47,138 +72,236 @@ ob_start();
 </div>
 
 <style>
-.login-page {
+.auth-page {
     min-height: 100vh;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px;
+    background: #f8fafc;
+    padding: 32px 16px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.login-container {
+.auth-container {
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
 }
 
-.login-card {
-    background: white;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+.auth-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 40px 36px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
 }
 
-.login-header {
+.auth-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 28px;
 }
 
-.login-header h1 {
-    font-size: 24px;
-    color: #1f2937;
-    margin-bottom: 8px;
+.auth-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    margin-bottom: 14px;
 }
 
-.login-header p {
-    color: #6b7280;
-    font-size: 14px;
+.brand-text {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.025em;
 }
 
-.login-form {
+.brand-accent {
+    color: #4f46e5;
+}
+
+.role-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #eff6ff;
+    color: #2563eb;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+}
+
+.auth-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+}
+
+.auth-subtitle {
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+.auth-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
+    gap: 6px;
+    text-align: left;
 }
 
 .form-group label {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
-    margin-bottom: 6px;
+    color: #334155;
 }
 
 .form-group input {
-    padding: 12px 16px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 16px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background: #ffffff;
+    transition: all 0.15s ease;
+    font-family: inherit;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
-.btn-login {
-    background: #667eea;
-    color: white;
+.btn-primary {
+    width: 100%;
+    background: #0f172a;
+    color: #ffffff;
     border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 500;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    margin-top: 6px;
 }
 
-.btn-login:hover {
-    background: #5a6fd8;
+.btn-primary:hover {
+    background: #1e293b;
 }
 
-.btn-login:disabled {
+.btn-primary:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
 
-.form-footer {
+.auth-footer {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
 }
 
-.form-footer p {
-    margin: 8px 0;
-    font-size: 14px;
-    color: #6b7280;
+.signup-prompt {
+    font-size: 0.875rem;
+    color: #475569;
+    margin-bottom: 12px;
 }
 
-.form-footer a {
-    color: #667eea;
+.signup-prompt a {
+    color: #4f46e5;
+    font-weight: 600;
     text-decoration: none;
 }
 
-.form-footer a:hover {
+.signup-prompt a:hover {
     text-decoration: underline;
 }
 
-.error-message {
-    background: #fee2e2;
-    color: #dc2626;
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    margin-bottom: 20px;
-    display: none;
+.role-switcher {
+    font-size: 0.8125rem;
+    color: #94a3b8;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
 }
 
-.loading {
-    opacity: 0.6;
-    pointer-events: none;
+.role-switcher a {
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.role-switcher a:hover {
+    color: #0f172a;
+    text-decoration: underline;
+}
+
+.dot {
+    color: #cbd5e1;
+}
+
+.back-home {
+    display: inline-block;
+    font-size: 0.8125rem;
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.back-home:hover {
+    color: #0f172a;
+}
+
+.auth-alert {
+    padding: 11px 14px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.alert-error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.alert-success {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.error-message {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    padding: 11px 14px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    margin-bottom: 18px;
+    text-align: left;
 }
 
 @media (max-width: 480px) {
-    .login-card {
-        padding: 30px 20px;
-    }
-    
-    .login-header h1 {
-        font-size: 20px;
+    .auth-card {
+        padding: 32px 24px;
     }
 }
 </style>
@@ -189,13 +312,11 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     
     const form = e.target;
     const formData = new FormData(form);
-    const submitBtn = form.querySelector('.btn-login');
-    const errorDiv = document.querySelector('.error-message');
+    const submitBtn = form.querySelector('.btn-primary');
+    const errorDiv = document.getElementById('asyncError');
     
-    
-    submitBtn.textContent = 'Logging in...';
+    submitBtn.textContent = 'Signing in...';
     submitBtn.disabled = true;
-    form.classList.add('loading');
     
     if (errorDiv) {
         errorDiv.style.display = 'none';
@@ -206,52 +327,41 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         body: formData
     })
     .then(response => {
-        
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
             return response.json();
         } else {
-            
             window.location.href = response.url || '/client';
             return null;
         }
     })
     .then(data => {
         if (data && data.success) {
-            
             window.location.href = '/client';
         } else if (data && !data.success) {
-            
-            showError(data.error || 'Login failed. Please try again.');
+            showError(data.error || 'Login failed. Please check your credentials.');
         }
-        
     })
     .catch(error => {
         console.error('Error:', error);
-        
-        if (error.message.includes('Unexpected token')) {
+        if (error.message && error.message.includes('Unexpected token')) {
             window.location.href = '/client';
         } else {
             showError('Network error. Please try again.');
         }
     })
     .finally(() => {
-        
-        submitBtn.textContent = 'Login';
+        submitBtn.textContent = 'Sign in';
         submitBtn.disabled = false;
-        form.classList.remove('loading');
     });
 });
 
 function showError(message) {
-    let errorDiv = document.querySelector('.error-message');
-    if (!errorDiv) {
-        errorDiv = document.createElement('div');
-        errorDiv.className = 'error-message';
-        document.querySelector('.login-form').insertBefore(errorDiv, document.querySelector('.form-group'));
+    const errorDiv = document.getElementById('asyncError');
+    if (errorDiv) {
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
     }
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
 }
 </script>
 
@@ -259,6 +369,6 @@ function showError(message) {
 $content = ob_get_clean();
 $title = 'Client Login';
 $hideNavbar = true;
+$fullWidth = true;
 include APP_ROOT . '/app/Views/layouts/main.php';
 ?>
-

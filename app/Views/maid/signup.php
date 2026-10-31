@@ -2,64 +2,70 @@
 ob_start();
 ?>
 
-<div class="signup-page">
-    <div class="signup-container">
-        <div class="signup-card">
-            <div class="signup-header">
-                <h1>🧹 Maid Registration</h1>
-                <p>Create your account to get started</p>
+<div class="auth-page auth-page-wide">
+    <div class="auth-container-wide">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="/" class="auth-brand">
+                    <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+                        <defs>
+                            <linearGradient id="maidRegLogoGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#4F46E5"/>
+                                <stop offset="1" stop-color="#2563EB"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#maidRegLogoGrad)" />
+                        <path d="M14 31V21L24 13L34 21V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19 31V23L24 27L29 23V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="brand-text">Maid<span class="brand-accent">Mate</span></span>
+                </a>
+                <div class="role-pill maid-pill">Helper Registration</div>
+                <h1 class="auth-title">Join as a Professional Helper</h1>
+                <p class="auth-subtitle">Create your helper profile and start receiving job matches</p>
             </div>
 
             <?php if (isset($_GET['error'])): ?>
-                <div class="error-message" style="display: block;">
+                <div class="auth-alert alert-error">
                     <?= htmlspecialchars($_GET['error']) ?>
                 </div>
             <?php endif; ?>
 
             <?php if (isset($_GET['success'])): ?>
-                <div class="success-message" style="display: block;">
+                <div class="auth-alert alert-success">
                     <?= htmlspecialchars($_GET['success']) ?>
                 </div>
             <?php endif; ?>
 
-            <form id="signupForm" class="signup-form" action="/maid/register" method="POST">
-                <div class="form-row">
+            <div class="error-message" id="asyncError" style="display: none;"></div>
+            <div class="success-message" id="asyncSuccess" style="display: none;"></div>
+
+            <form id="signupForm" class="auth-form" action="/maid/register" method="POST">
+                <input type="hidden" name="csrf_token" value="<?= (new Core\Session())->getCsrfToken() ?>">
+
+                <div class="form-grid">
                     <div class="form-group">
-                        <label for="full_name">Full Name *</label>
-                        <input type="text" id="full_name" name="full_name" required>
+                        <label for="full_name">Full name *</label>
+                        <input type="text" id="full_name" name="full_name" placeholder="As shown in passport" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" required>
+                        <label for="email">Email address *</label>
+                        <input type="email" id="email" name="email" placeholder="name@example.com" required>
                     </div>
-                </div>
-                
-                <div class="form-row">
+
                     <div class="form-group">
                         <label for="password">Password *</label>
-                        <div class="password-input-wrapper">
-                            <input type="password" id="password" name="password" required minlength="6">
-                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
-                                <span class="toggle-icon">👁️</span>
-                            </button>
-                        </div>
+                        <input type="password" id="password" name="password" required minlength="6" placeholder="Min. 6 characters">
                     </div>
                     <div class="form-group">
-                        <label for="confirm_password">Confirm Password *</label>
-                        <div class="password-input-wrapper">
-                            <input type="password" id="confirm_password" name="confirm_password" required>
-                            <button type="button" class="password-toggle" onclick="togglePassword('confirm_password')">
-                                <span class="toggle-icon">👁️</span>
-                            </button>
-                        </div>
+                        <label for="confirm_password">Confirm password *</label>
+                        <input type="password" id="confirm_password" name="confirm_password" required minlength="6" placeholder="Repeat password">
                     </div>
-                </div>
-                
-                <div class="form-row">
+
                     <div class="form-group">
                         <label for="nationality">Nationality *</label>
                         <select id="nationality" name="nationality" required>
-                            <option value="">Select Nationality</option>
+                            <option value="">Select nationality</option>
                             <option value="Philippines">Philippines</option>
                             <option value="Indonesia">Indonesia</option>
                             <option value="Myanmar">Myanmar</option>
@@ -71,46 +77,44 @@ ob_start();
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="date_of_birth">Date of Birth *</label>
+                        <label for="date_of_birth">Date of birth *</label>
                         <input type="date" id="date_of_birth" name="date_of_birth" required>
                     </div>
-                </div>
-                
-                <div class="form-row">
+
                     <div class="form-group">
                         <label for="gender">Gender *</label>
                         <select id="gender" name="gender" required>
-                            <option value="">Select Gender</option>
+                            <option value="">Select gender</option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="contact_number">Contact Number</label>
-                        <input type="tel" id="contact_number" name="contact_number" placeholder="+65 XXXX XXXX">
+                        <label for="contact_number">Contact number</label>
+                        <input type="tel" id="contact_number" name="contact_number" placeholder="+65 9123 4567">
+                    </div>
+
+                    <div class="form-group form-col-span">
+                        <label for="experience_level">Experience level *</label>
+                        <select id="experience_level" name="experience_level" required>
+                            <option value="">Select experience level</option>
+                            <option value="Beginner (0-2 years)">Beginner (0-2 years)</option>
+                            <option value="Intermediate (2-5 years)">Intermediate (2-5 years)</option>
+                            <option value="Experienced (5+ years)">Experienced (5+ years)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group form-col-span">
+                        <label for="emergency_contact">Emergency contact</label>
+                        <input type="text" id="emergency_contact" name="emergency_contact" placeholder="Contact name, relationship, and phone number">
                     </div>
                 </div>
+
+                <button type="submit" class="btn-primary" style="margin-top: 10px;">Submit Helper Application</button>
                 
-                <div class="form-group">
-                    <label for="experience_level">Experience Level *</label>
-                    <select id="experience_level" name="experience_level" required>
-                        <option value="">Select Experience Level</option>
-                        <option value="Beginner (0-2 years)">Beginner (0-2 years)</option>
-                        <option value="Intermediate (2-5 years)">Intermediate (2-5 years)</option>
-                        <option value="Experienced (5+ years)">Experienced (5+ years)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="emergency_contact">Emergency Contact</label>
-                    <textarea id="emergency_contact" name="emergency_contact" rows="2" placeholder="Emergency contact name and phone number"></textarea>
-                </div>
-                
-                <button type="submit" class="btn-signup">Create Account</button>
-                
-                <div class="form-footer">
-                    <p>Already have an account? <a href="/maid/login">Login here</a></p>
-                    <p><a href="/">← Back to role selection</a></p>
+                <div class="auth-footer">
+                    <p class="signup-prompt">Already registered? <a href="/maid/login">Helper sign in</a></p>
+                    <a href="/" class="back-home">← Back to home</a>
                 </div>
             </form>
         </div>
@@ -118,331 +122,245 @@ ob_start();
 </div>
 
 <style>
-.signup-page {
+.auth-page {
     min-height: 100vh;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px;
+    background: #f8fafc;
+    padding: 48px 16px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.signup-container {
+.auth-container-wide {
     width: 100%;
-    max-width: 600px;
+    max-width: 660px;
 }
 
-.signup-card {
-    background: white;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
-    max-height: 90vh;
-    overflow-y: auto;
+.auth-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 40px 36px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
 }
 
-.signup-header {
+.auth-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 28px;
 }
 
-.signup-header h1 {
-    font-size: 24px;
-    color: #1f2937;
-    margin-bottom: 8px;
+.auth-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    margin-bottom: 14px;
 }
 
-.signup-header p {
-    color: #6b7280;
-    font-size: 14px;
+.brand-text {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.025em;
 }
 
-.signup-form {
+.brand-accent {
+    color: #4f46e5;
+}
+
+.role-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+}
+
+.maid-pill {
+    background: #f0fdf4;
+    color: #166534;
+}
+
+.auth-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+}
+
+.auth-subtitle {
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+.auth-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
 }
 
-.form-row {
+.form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
 }
 
+.form-col-span {
+    grid-column: span 2;
+}
+
 .form-group {
     display: flex;
     flex-direction: column;
+    gap: 6px;
+    text-align: left;
 }
 
 .form-group label {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
-    margin-bottom: 6px;
+    color: #334155;
 }
 
-.form-group input,
-.form-group select,
+.form-group input, 
+.form-group select, 
 .form-group textarea {
-    padding: 12px 16px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 16px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background: #ffffff;
+    transition: all 0.15s ease;
     font-family: inherit;
 }
 
-.form-group input:focus,
-.form-group select:focus,
+.form-group input:focus, 
+.form-group select:focus, 
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 60px;
-}
-
-.password-input-wrapper {
-    position: relative;
-}
-
-.password-input-wrapper input {
-    padding-right: 50px;
-}
-
-.password-toggle {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
+.btn-primary {
+    width: 100%;
+    background: #0f172a;
+    color: #ffffff;
     border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 16px;
-    color: #6b7280;
-    padding: 4px;
-    border-radius: 4px;
-    transition: color 0.2s ease;
+    transition: all 0.15s ease;
+    font-family: inherit;
 }
 
-.password-toggle:hover {
-    color: #374151;
+.btn-primary:hover {
+    background: #1e293b;
 }
 
-.password-toggle:focus {
-    outline: none;
-    color: #667eea;
-}
-
-.btn-signup {
-    background: #667eea;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    margin-top: 10px;
-}
-
-.btn-signup:hover {
-    background: #5a6fd8;
-}
-
-.btn-signup:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.form-footer {
+.auth-footer {
     text-align: center;
     margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #f1f5f9;
 }
 
-.form-footer p {
-    margin: 8px 0;
-    font-size: 14px;
-    color: #6b7280;
+.signup-prompt {
+    font-size: 0.875rem;
+    color: #475569;
+    margin-bottom: 12px;
 }
 
-.form-footer a {
-    color: #667eea;
+.signup-prompt a {
+    color: #4f46e5;
+    font-weight: 600;
     text-decoration: none;
 }
 
-.form-footer a:hover {
+.signup-prompt a:hover {
     text-decoration: underline;
 }
 
-.error-message {
-    background: #fee2e2;
-    color: #dc2626;
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    margin-bottom: 20px;
-    display: none;
+.back-home {
+    display: inline-block;
+    font-size: 0.8125rem;
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.15s ease;
 }
 
-.success-message {
-    background: #dcfce7;
+.back-home:hover {
+    color: #0f172a;
+}
+
+.auth-alert, .error-message, .success-message {
+    padding: 11px 14px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.alert-error, .error-message {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.alert-success, .success-message {
+    background: #f0fdf4;
     color: #166534;
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    margin-bottom: 20px;
-    display: none;
+    border: 1px solid #bbf7d0;
 }
 
-.loading {
-    opacity: 0.6;
-    pointer-events: none;
-}
-
-@media (max-width: 768px) {
-    .form-row {
+@media (max-width: 600px) {
+    .form-grid {
         grid-template-columns: 1fr;
     }
-    
-    .signup-card {
-        padding: 30px 20px;
+    .form-col-span {
+        grid-column: span 1;
     }
-    
-    .signup-header h1 {
-        font-size: 20px;
+    .auth-card {
+        padding: 28px 20px;
     }
 }
 </style>
 
-<script>
-
-function togglePassword(inputId) {
-    const input = document.getElementById(inputId);
-    const toggleIcon = input.parentElement.querySelector('.toggle-icon');
-    
-    if (input.type === 'password') {
-        input.type = 'text';
-        toggleIcon.textContent = '🙈';
-    } else {
-        input.type = 'password';
-        toggleIcon.textContent = '👁️';
-    }
-}
-
-function validateAge(dateOfBirth) {
-    const today = new Date();
-    const birthDate = new Date(dateOfBirth);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-    
-    return age;
-}
-
+<script<?= defined('CSP_NONCE') ? ' nonce="' . CSP_NONCE . '"' : '' ?>>
 document.getElementById('signupForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const form = e.target;
-    const formData = new FormData(form);
-    const submitBtn = form.querySelector('.btn-signup');
-    
-    
-    const dateOfBirth = formData.get('date_of_birth');
-    if (dateOfBirth) {
-        const age = validateAge(dateOfBirth);
-        if (age < 25 || age > 55) {
-            showError('Age must be between 25 and 55 years to register');
-            return;
-        }
-    }
-    
-    
-    const password = formData.get('password');
-    const confirmPassword = formData.get('confirm_password');
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
     
     if (password !== confirmPassword) {
+        e.preventDefault();
         showError('Passwords do not match');
         return;
     }
-    
-    
-    submitBtn.textContent = 'Creating Account...';
-    submitBtn.disabled = true;
-    form.classList.add('loading');
-    
-    hideMessages();
-    
-    fetch('/maid/register', {
-        method: 'POST',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showSuccess('Account created successfully! Redirecting to login...');
-            setTimeout(() => {
-                window.location.href = '/maid/login';
-            }, 2000);
-        } else {
-            showError(data.error || 'Registration failed. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showError('Network error. Please try again.');
-    })
-    .finally(() => {
-        
-        submitBtn.textContent = 'Create Account';
-        submitBtn.disabled = false;
-        form.classList.remove('loading');
-    });
 });
 
 function showError(message) {
-    let errorDiv = document.querySelector('.error-message');
-    if (!errorDiv) {
-        errorDiv = document.createElement('div');
-        errorDiv.className = 'error-message';
-        document.querySelector('.signup-form').insertBefore(errorDiv, document.querySelector('.form-row'));
+    const errorDiv = document.getElementById('asyncError');
+    if (errorDiv) {
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
     }
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
-}
-
-function showSuccess(message) {
-    let successDiv = document.querySelector('.success-message');
-    if (!successDiv) {
-        successDiv = document.createElement('div');
-        successDiv.className = 'success-message';
-        document.querySelector('.signup-form').insertBefore(successDiv, document.querySelector('.form-row'));
-    }
-    successDiv.textContent = message;
-    successDiv.style.display = 'block';
-}
-
-function hideMessages() {
-    const errorDiv = document.querySelector('.error-message');
-    const successDiv = document.querySelector('.success-message');
-    if (errorDiv) errorDiv.style.display = 'none';
-    if (successDiv) successDiv.style.display = 'none';
 }
 </script>
 
 <?php
 $content = ob_get_clean();
-$title = 'Maid Registration';
+$title = 'Helper Registration';
 $hideNavbar = true;
+$fullWidth = true;
 include APP_ROOT . '/app/Views/layouts/main.php';
 ?>

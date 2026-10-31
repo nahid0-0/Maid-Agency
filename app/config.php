@@ -28,9 +28,9 @@ define('DB_SSL', EnvLoader::get('DB_SSL', (strpos(DB_HOST, 'tidbcloud.com') !== 
 define('DB_SSL_CA', EnvLoader::get('DB_SSL_CA', ''));
 
 // Application settings
-define('APP_NAME', EnvLoader::get('APP_NAME', 'Maid Agency Management System'));
-define('APP_COMPANY', EnvLoader::get('APP_COMPANY', 'CleanCare Agency'));
-define('APP_TAGLINE', EnvLoader::get('APP_TAGLINE', 'Professional Home Care Services'));
+define('APP_NAME', EnvLoader::get('APP_NAME', 'MaidMate'));
+define('APP_COMPANY', EnvLoader::get('APP_COMPANY', 'MaidMate'));
+define('APP_TAGLINE', EnvLoader::get('APP_TAGLINE', 'Professional Home Care & Domestic Services'));
 define('APP_ENV', EnvLoader::get('APP_ENV', 'development')); // development, production
 define('APP_DEBUG', EnvLoader::get('APP_DEBUG', 'true') === 'true');
 

@@ -4,15 +4,25 @@ ob_start();
 
 <header class="landing-header">
     <div class="header-container">
-        <div class="header-brand">
-            <span class="brand-icon-small">🏠</span>
-            <span class="brand-name"><?= htmlspecialchars(APP_NAME) ?></span>
-        </div>
+        <a href="/" class="header-brand">
+            <svg width="34" height="34" viewBox="0 0 48 48" fill="none">
+                <defs>
+                    <linearGradient id="homeBrandGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#4F46E5"/>
+                        <stop offset="1" stop-color="#2563EB"/>
+                    </linearGradient>
+                </defs>
+                <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#homeBrandGrad)" />
+                <path d="M14 31V21L24 13L34 21V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 31V23L24 27L29 23V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="brand-name">Maid<span class="brand-name-accent">Mate</span></span>
+        </a>
         <nav class="header-nav">
             <a href="#about" class="nav-link-header">About</a>
-            <a href="#services" class="nav-link-header">Services</a>
-            <a href="#contact" class="nav-link-header">Contact</a>
+            <a href="#portals" class="nav-link-header">Portals</a>
             <a href="#faq" class="nav-link-header">FAQ</a>
+            <a href="/client/login" class="nav-cta-header">Client Portal →</a>
         </nav>
     </div>
 </header>
@@ -20,34 +30,18 @@ ob_start();
 <div class="hero-section">
     <div class="hero-content">
         <div class="brand-section">
-            <div class="brand-icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-                    <polyline points="9,22 9,12 15,12 15,22"/>
-                </svg>
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Reliable Domestic Agency Management
             </div>
-            <h1><?= htmlspecialchars(APP_COMPANY) ?></h1>
-            <p class="tagline"><?= htmlspecialchars(APP_TAGLINE) ?></p>
+            <h1 class="hero-headline">Welcome to <span class="text-gradient">MaidMate</span></h1>
+            <p class="tagline">Connecting caring households with verified, professional domestic helpers through a secure, transparent platform.</p>
         </div>
 
-        <div class="role-cards">
-            <div class="card" data-role="maid">
-                <div class="card-icon maid-bg">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                        <circle cx="12" cy="7" r="4"/>
-                    </svg>
-                </div>
-                <h3>Maid Portal</h3>
-                <p>Manage your profile, documents, and work schedule</p>
-                <div class="card-action">
-                    <span>Sign in →</span>
-                </div>
-            </div>
-
+        <div id="portals" class="role-cards">
             <div class="card" data-role="client">
                 <div class="card-icon client-bg">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
                         <circle cx="9" cy="7" r="4"/>
                         <path d="M23 21v-2a4 4 0 00-3-3.87"/>
@@ -55,15 +49,29 @@ ob_start();
                     </svg>
                 </div>
                 <h3>Client Portal</h3>
-                <p>Book services, browse helpers, and manage bookings</p>
+                <p>Browse pre-screened helpers, submit hiring requests, and track your placements.</p>
                 <div class="card-action">
-                    <span>Sign in →</span>
+                    <span>Enter portal →</span>
+                </div>
+            </div>
+
+            <div class="card" data-role="maid">
+                <div class="card-icon maid-bg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <h3>Helper Portal</h3>
+                <p>Manage your profile, upload training & medical certificates, and view work schedules.</p>
+                <div class="card-action">
+                    <span>Enter portal →</span>
                 </div>
             </div>
 
             <div class="card" data-role="staff">
                 <div class="card-icon staff-bg">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
                         <line x1="16" y1="2" x2="16" y2="6"/>
                         <line x1="8" y1="2" x2="8" y2="6"/>
@@ -71,418 +79,340 @@ ob_start();
                     </svg>
                 </div>
                 <h3>Staff Console</h3>
-                <p>Manage operations, users, and business analytics</p>
+                <p>Administer agency workflows, verify records, and manage deployment operations.</p>
                 <div class="card-action">
-                    <span>Sign in →</span>
+                    <span>Enter console →</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<footer class="landing-footer">
+<footer class="landing-footer" id="about">
     <div class="footer-container-landing">
         <div class="footer-content-landing">
-            
             <div class="footer-section-landing">
-                <h3>About <?= htmlspecialchars(APP_NAME) ?></h3>
-                <p>We connect families with trusted domestic helpers, providing a reliable and transparent platform for employment services.</p>
-                <div class="social-links-landing">
-                    <a href="#" title="Facebook" class="social-icon">📘</a>
-                    <a href="#" title="Twitter" class="social-icon">🐦</a>
-                    <a href="#" title="LinkedIn" class="social-icon">💼</a>
-                    <a href="#" title="Instagram" class="social-icon">📷</a>
+                <div class="footer-brand">
+                    <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+                        <rect x="4" y="4" width="40" height="40" rx="12" fill="#4F46E5" />
+                        <path d="M14 31V21L24 13L34 21V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19 31V23L24 27L29 23V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Maid<span style="color:#818CF8;">Mate</span></span>
                 </div>
+                <p>Providing seamless, trusted domestic helper agency management and placements with high standards of compliance and care.</p>
             </div>
 
-            
             <div class="footer-section-landing">
-                <h3>Quick Links</h3>
-                <ul class="footer-links-landing">
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#services">Our Services</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                </ul>
-            </div>
-
-            
-            <div class="footer-section-landing">
-                <h3>For Clients</h3>
+                <h3>For Households</h3>
                 <ul class="footer-links-landing">
                     <li><a href="/client/signup">Register as Client</a></li>
-                    <li><a href="/client/login">Client Login</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="/client/login">Client Sign In</a></li>
+                    <li><a href="/client">Browse Available Helpers</a></li>
                 </ul>
             </div>
 
-            
             <div class="footer-section-landing">
                 <h3>For Helpers</h3>
                 <ul class="footer-links-landing">
-                    <li><a href="/maid/signup">Apply as Helper</a></li>
-                    <li><a href="/maid/login">Helper Login</a></li>
-                    <li><a href="#training">Training Programs</a></li>
-                    <li><a href="#support">Helper Support</a></li>
+                    <li><a href="/maid/signup">Apply as Domestic Helper</a></li>
+                    <li><a href="/maid/login">Helper Sign In</a></li>
                 </ul>
             </div>
 
-            
-            <div class="footer-section-landing">
-                <h3>Contact Us</h3>
-                <p class="contact-item">📍 123 Agency Street<br>Singapore 123456</p>
-                <p class="contact-item">📞 +65 1234 5678</p>
-                <p class="contact-item">✉️ info@cleancare.sg</p>
-                <p class="contact-item">🕒 Mon-Fri: 9AM-6PM</p>
+            <div class="footer-section-landing" id="faq">
+                <h3>Staff & Admin</h3>
+                <ul class="footer-links-landing">
+                    <li><a href="/staff/login">Staff Management Console</a></li>
+                </ul>
             </div>
         </div>
 
-        
         <div class="footer-bottom-landing">
-            <p>&copy; <?= date('Y') ?> <?= htmlspecialchars(APP_NAME) ?>. All rights reserved.</p>
-            <p class="footer-links-inline">
-                <a href="#privacy">Privacy Policy</a> |
-                <a href="#terms">Terms of Service</a> |
-                <a href="#cookies">Cookie Policy</a>
-            </p>
+            <p>&copy; <?= date('Y') ?> MaidMate. All rights reserved.</p>
         </div>
     </div>
 </footer>
 
 <style>
-
 .landing-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
 .header-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0 24px;
+    height: 68px;
 }
 
 .header-brand {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 1.5rem;
+    text-decoration: none;
+    font-size: 1.35rem;
     font-weight: 700;
-    color: white;
+    color: #0f172a;
+    letter-spacing: -0.025em;
 }
 
-.brand-icon-small {
-    font-size: 1.8rem;
+.brand-name-accent {
+    color: #4f46e5;
 }
 
 .header-nav {
     display: flex;
-    gap: 2rem;
+    align-items: center;
+    gap: 1.5rem;
 }
 
 .nav-link-header {
-    color: white;
+    color: #475569;
     text-decoration: none;
     font-weight: 500;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    padding: 0.5rem 0;
-    border-bottom: 2px solid transparent;
+    font-size: 0.9rem;
+    transition: color 0.15s ease;
 }
 
 .nav-link-header:hover {
-    border-bottom-color: white;
-    opacity: 0.9;
+    color: #0f172a;
+}
+
+.nav-cta-header {
+    background: #0f172a;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+}
+
+.nav-cta-header:hover {
+    background: #1e293b;
+}
+
+.hero-section {
+    min-height: calc(100vh - 68px);
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+}
+
+.hero-content {
+    max-width: 1100px;
+    width: 100%;
+    text-align: center;
+}
+
+.brand-section {
+    margin-bottom: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: 9999px;
+    color: #2563eb;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2563eb;
+}
+
+.hero-headline {
+    font-size: 3.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px 0;
+    line-height: 1.15;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+    font-size: 1.15rem;
+    color: #64748b;
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.role-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px 28px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.08);
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.client-bg { background: #2563eb; }
+.maid-bg { background: #059669; }
+.staff-bg { background: #0f172a; }
+
+.card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.015em;
+}
+
+.card p {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin: 0 0 24px 0;
+    flex-grow: 1;
+}
+
+.card-action {
+    color: #4f46e5;
+    font-size: 0.875rem;
+    font-weight: 600;
 }
 
 .landing-footer {
-    background: #1f2937;
-    color: #d1d5db;
-    margin-top: 4rem;
-    padding: 4rem 0 1.5rem;
+    background: #0f172a;
+    color: #cbd5e1;
+    padding: 60px 0 32px;
 }
 
 .footer-container-landing {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 24px;
 }
 
 .footer-content-landing {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 36px;
+    margin-bottom: 40px;
 }
 
-.footer-section-landing h3 {
-    color: white;
-    font-size: 1.1rem;
-    margin-bottom: 1.25rem;
-    font-weight: 600;
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 14px;
 }
 
 .footer-section-landing p {
-    margin-bottom: 0.75rem;
-    line-height: 1.8;
-    color: #9ca3af;
-    font-size: 0.95rem;
+    color: #94a3b8;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    max-width: 320px;
 }
 
-.contact-item {
-    margin-bottom: 0.5rem !important;
+.footer-section-landing h3 {
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
 }
 
 .footer-links-landing {
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-.footer-links-landing li {
-    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .footer-links-landing a {
-    color: #d1d5db;
+    color: #94a3b8;
     text-decoration: none;
-    transition: color 0.3s ease, transform 0.2s ease;
-    display: inline-block;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+    transition: color 0.15s ease;
 }
 
 .footer-links-landing a:hover {
-    color: #667eea;
-    transform: translateX(3px);
-}
-
-.social-links-landing {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.social-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-}
-
-.social-icon:hover {
-    background: #667eea;
-    transform: translateY(-3px);
+    color: #ffffff;
 }
 
 .footer-bottom-landing {
-    border-top: 1px solid #374151;
-    padding-top: 2rem;
+    border-top: 1px solid #1e293b;
+    padding-top: 24px;
     text-align: center;
-    color: #9ca3af;
-    font-size: 0.9rem;
+    color: #64748b;
+    font-size: 0.85rem;
 }
 
-.footer-bottom-landing p {
-    margin: 0.5rem 0;
-}
-
-.footer-links-inline a {
-    color: #667eea;
-    text-decoration: none;
-    margin: 0 0.5rem;
-}
-
-.footer-links-inline a:hover {
-    text-decoration: underline;
-}
-
-.hero-section {
-    min-height: calc(100vh - 80px);
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 2rem;
-}
-
-.hero-content {
-    max-width: 1000px;
-    width: 100%;
-    text-align: center;
-}
-
-.brand-section {
-    margin-bottom: 3rem;
-}
-
-.brand-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    background: #2563eb;
-    color: white;
-    border-radius: 20px;
-    margin-bottom: 1.5rem;
-}
-
-.brand-section h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin: 0 0 0.5rem 0;
-}
-
-.tagline {
-    font-size: 1.25rem;
-    color: #6b7280;
-    margin: 0;
-}
-
-.role-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.card {
-    background: white;
-    border: 2px solid #f3f4f6;
-    border-radius: 16px;
-    padding: 2rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: left;
-}
-
-.card:hover {
-    border-color: #2563eb;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-}
-
-.card-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    color: white;
-}
-
-.maid-bg { background: #2563eb; }
-.client-bg { background: #059669; }
-.staff-bg { background: #dc2626; }
-
-.card h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0 0 0.5rem 0;
-}
-
-.card p {
-    color: #6b7280;
-    font-size: 1rem;
-    margin: 0 0 1.5rem 0;
-    line-height: 1.5;
-}
-
-.card-action {
-    color: #2563eb;
-    font-weight: 500;
-}
-
-@media (max-width: 768px) {
-    .header-container {
-        padding: 1rem;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .header-nav {
-        gap: 1.5rem;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .nav-link-header {
-        font-size: 0.9rem;
-    }
-
-    .hero-section {
-        padding: 2rem 1rem;
-        min-height: auto;
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-    }
-
-    .brand-section h1 {
-        font-size: 2.5rem;
-    }
-
+@media (max-width: 900px) {
     .role-cards {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        max-width: 440px;
     }
-
-    .card {
-        padding: 1.5rem;
-    }
-
     .footer-content-landing {
         grid-template-columns: 1fr;
-        gap: 2rem;
     }
-
-    .footer-container-landing {
-        padding: 0 1rem;
-    }
-
-    .landing-footer {
-        margin-top: 2rem;
-        padding: 2.5rem 0 1rem;
-    }
-
-    .social-links-landing {
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .brand-section h1 {
-        font-size: 2rem;
-    }
-
-    .tagline {
-        font-size: 1.1rem;
-    }
-
-    .brand-icon {
-        width: 60px;
-        height: 60px;
+    .hero-headline {
+        font-size: 2.5rem;
     }
 }
 </style>
@@ -502,16 +432,14 @@ document.querySelectorAll('.card').forEach(card => {
         }
     });
 
-    
     card.setAttribute('tabindex', '0');
 });
 </script>
 
 <?php
 $content = ob_get_clean();
-$title = 'Login';
+$title = 'Welcome to MaidMate';
 $hideNavbar = true; 
 $fullWidth = true; 
 include APP_ROOT . '/app/Views/layouts/main.php';
 ?>
-

@@ -1,12 +1,16 @@
 services:
   - type: web
-    name: maid-agency
+    name: maidmate
     runtime: docker
     plan: free
     region: singapore
     envVars:
       - key: PORT
         value: 80
+      - key: APP_NAME
+        value: MaidMate
+      - key: APP_COMPANY
+        value: MaidMate
       - key: APP_ENV
         value: production
       - key: APP_DEBUG

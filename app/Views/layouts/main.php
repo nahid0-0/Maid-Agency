@@ -3,64 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($title ?? APP_NAME) ?></title>
+    <title><?= htmlspecialchars($title ?? APP_NAME) ?> | MaidMate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/public/assets/icon.svg">
     <style>
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #ffffff;
+            color: #0f172a;
             padding: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
         .navbar-container {
-            max-width: 1400px;
+            max-width: 1300px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 30px;
+            padding: 0 24px;
+            height: 64px;
         }
 
         .navbar-brand {
-            font-size: 1.8em;
-            font-weight: 800;
+            font-size: 1.25rem;
+            font-weight: 700;
             text-decoration: none;
-            color: white;
-            padding: 18px 0;
+            color: #0f172a;
             display: flex;
             align-items: center;
             gap: 10px;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.025em;
+            transition: opacity 0.15s ease;
         }
 
         .navbar-brand:hover {
-            opacity: 0.9;
+            opacity: 0.85;
         }
 
-        .brand-logo {
-            font-size: 1.2em;
+        .brand-logo-svg {
+            width: 32px;
+            height: 32px;
+            display: block;
+        }
+
+        .brand-text-accent {
+            color: #4f46e5;
         }
         
         .navbar-nav {
             display: flex;
+            align-items: center;
             list-style: none;
-            gap: 0;
+            gap: 8px;
         }
         
         .nav-item {
@@ -68,17 +83,21 @@
         }
         
         .nav-link {
-            display: block;
-            padding: 15px 20px;
-            color: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            color: #475569;
+            font-size: 0.875rem;
+            font-weight: 500;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            border-radius: 8px;
+            transition: all 0.15s ease;
         }
         
         .nav-link:hover {
-            background-color: rgba(255,255,255,0.1);
-            text-decoration: none;
-            color: white;
+            background-color: #f1f5f9;
+            color: #0f172a;
         }
         
         .dropdown {
@@ -87,14 +106,16 @@
         
         .dropdown-menu {
             position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            min-width: 200px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-radius: 4px;
+            top: calc(100% + 6px);
+            right: 0;
+            background: #ffffff;
+            min-width: 180px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
             display: none;
             z-index: 1000;
+            padding: 6px;
         }
         
         .dropdown:hover .dropdown-menu {
@@ -102,67 +123,81 @@
         }
         
         .dropdown-item {
-            display: block;
-            padding: 10px 20px;
-            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            color: #334155;
+            font-size: 0.875rem;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            border-radius: 6px;
+            transition: all 0.15s ease;
         }
         
         .dropdown-item:hover {
-            background-color: #f8f9fa;
-            text-decoration: none;
-            color: #333;
+            background-color: #f1f5f9;
+            color: #0f172a;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 32px 20px;
+        }
+
+        .fullwidth-container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
         
         .flash-messages {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         
         .flash-message {
-            padding: 12px 20px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border-left: 4px solid;
+            padding: 12px 18px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid transparent;
         }
         
         .flash-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border-left-color: #dc3545;
+            background-color: #fef2f2;
+            color: #991b1b;
+            border-color: #fecaca;
         }
         
         .flash-success {
-            background-color: #d4edda;
-            color: #155724;
-            border-left-color: #28a745;
+            background-color: #f0fdf4;
+            color: #166534;
+            border-color: #bbf7d0;
         }
         
         .flash-info {
-            background-color: #d1ecf1;
-            color: #0c5460;
-            border-left-color: #17a2b8;
+            background-color: #f0f9ff;
+            color: #075985;
+            border-color: #bae6fd;
         }
         
         .flash-warning {
-            background-color: #fff3cd;
-            color: #856404;
-            border-left-color: #ffc107;
+            background-color: #fffbeb;
+            color: #92400e;
+            border-color: #fde68a;
         }
 
-        
         .navbar-toggle {
             display: none;
             background: none;
-            border: none;
-            color: white;
-            font-size: 1.5em;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            color: #0f172a;
+            padding: 6px 10px;
+            font-size: 1.1rem;
             cursor: pointer;
         }
         
@@ -174,12 +209,15 @@
             .navbar-nav {
                 display: none;
                 position: absolute;
-                top: 100%;
+                top: 64px;
                 left: 0;
                 right: 0;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: #ffffff;
                 flex-direction: column;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                align-items: stretch;
+                padding: 12px 16px;
+                border-bottom: 1px solid #e2e8f0;
+                box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
             }
             
             .navbar-nav.show {
@@ -190,47 +228,49 @@
                 position: static;
                 display: block;
                 box-shadow: none;
-                background: rgba(255,255,255,0.1);
-                margin-left: 20px;
+                background: #f8fafc;
+                margin-top: 4px;
+                border: none;
             }
             
             .dropdown-item {
-                color: white;
-                padding-left: 40px;
-            }
-            
-            .dropdown-item:hover {
-                background-color: rgba(255,255,255,0.1);
-                color: white;
+                padding-left: 20px;
             }
             
             .container {
-                padding: 10px;
+                padding: 16px;
             }
         }
     </style>
 </head>
 <body>
     <?php
-        
         $session = $session ?? new Core\Session();
         $currentRole = $session->get('role'); 
         $hideBar = isset($hideNavbar) && $hideNavbar === true;
-        
         
         if (!$hideBar):
     ?>
     <nav class="navbar">
         <div class="navbar-container">
             <a href="/" class="navbar-brand">
-                <span class="brand-logo">🏠</span>
-                <?= htmlspecialchars(APP_NAME) ?>
+                <svg class="brand-logo-svg" viewBox="0 0 48 48" fill="none">
+                    <defs>
+                        <linearGradient id="navMMGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#4F46E5"/>
+                            <stop offset="1" stop-color="#2563EB"/>
+                        </linearGradient>
+                    </defs>
+                    <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#navMMGrad)" />
+                    <path d="M14 31V21L24 13L34 21V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19 31V23L24 27L29 23V31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Maid<span class="brand-text-accent">Mate</span></span>
             </a>
 
             <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
 
             <ul class="navbar-nav" id="navbarNav">
-                
                 <?php if ($currentRole === 'maid'): ?>
                     <li class="nav-item">
                         <a href="/maid" class="nav-link">📊 Dashboard</a>
@@ -263,7 +303,16 @@
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <a href="/" class="nav-link">🏠 Home</a>
+                        <a href="/" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/client/login" class="nav-link">Client Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/maid/login" class="nav-link">Helper Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/staff/login" class="nav-link">Staff Login</a>
                     </li>
                 <?php endif; ?>
             </ul>
@@ -272,14 +321,12 @@
     <?php endif; ?>
 
     <?php
-    
-    $useFullWidth = isset($fullWidth) && $fullWidth === true;
-    $containerClass = $useFullWidth ? '' : 'container';
+    $isFull = (isset($fullWidth) && $fullWidth === true) || (isset($hideNavbar) && $hideNavbar === true);
+    $containerClass = $isFull ? 'fullwidth-container' : 'container';
     ?>
 
     <div class="<?= $containerClass ?>">
         <?php
-        
         $session = new Core\Session();
         $hasMessages = false;
         foreach (['error', 'success', 'info', 'warning'] as $type) {
@@ -308,7 +355,6 @@
             nav.classList.toggle('show');
         }
 
-        
         document.addEventListener('click', function(event) {
             const nav = document.getElementById('navbarNav');
             const toggle = document.querySelector('.navbar-toggle');
@@ -318,7 +364,6 @@
             }
         });
 
-        
         function getCsrfToken() {
             <?php
             $session = $session ?? new Core\Session();
@@ -326,7 +371,6 @@
             ?>
         }
 
-        
         document.addEventListener('DOMContentLoaded', function() {
             const forms = document.querySelectorAll('form:not([data-no-csrf])');
             forms.forEach(form => {
