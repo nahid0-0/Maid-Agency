@@ -1,0 +1,60 @@
+services:
+  # ── MySQL Database ───────────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: maid_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: maid_agency
+      MYSQL_USER: maid_user
+      MYSQL_PASSWORD: maid_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./scripts/setup-database.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./scripts/sample-data.sql:/docker-entrypoint-initdb.d/02-sample-data.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ── PHP + Apache App ─────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: maid_app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: development
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8080
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_NAME: maid_agency
+      DB_USER: maid_user
+      DB_PASS: maid_pass
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+      CLOUDINARY_UPLOAD_PRESET: ${CLOUDINARY_UPLOAD_PRESET:-}
+    volumes:
+      - ./app:/var/www/html/app
+      - ./public:/var/www/html/public
+      - ./views:/var/www/html/views
+      - ./index.php:/var/www/html/index.php
+      - ./storage:/var/www/html/storage
+      - ./logs:/var/www/html/logs
+
+volumes:
+  db_data:
+    driver: local

@@ -48,8 +48,9 @@ class Database
     {
         try {
             $dsn = sprintf(
-                'mysql:unix_socket=%s;dbname=%s;charset=%s',
-                DB_SOCKET,
+                'mysql:host=%s;port=%s;dbname=%s;charset=%s',
+                DB_HOST,
+                DB_PORT,
                 DB_NAME,
                 DB_CHARSET
             );
@@ -60,6 +61,21 @@ class Database
                 PDO::ATTR_EMULATE_PREPARES => false,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES " . DB_CHARSET,
             ];
+
+            if (defined('DB_SSL') && DB_SSL) {
+                $ca = defined('DB_SSL_CA') && !empty(DB_SSL_CA) ? DB_SSL_CA : null;
+                if (!$ca) {
+                    if (file_exists('/etc/ssl/certs/ca-certificates.crt')) {
+                        $ca = '/etc/ssl/certs/ca-certificates.crt';
+                    } elseif (file_exists('/etc/ssl/cert.pem')) {
+                        $ca = '/etc/ssl/cert.pem';
+                    }
+                }
+                if ($ca) {
+                    $options[PDO::MYSQL_ATTR_SSL_CA] = $ca;
+                }
+                $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
+            }
 
             self::$connection = new PDO($dsn, DB_USER, DB_PASS, $options);
             

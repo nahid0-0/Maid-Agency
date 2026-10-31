@@ -24,7 +24,9 @@ class EnvLoader {
         }
         
         if (!$envPath) {
-            throw new Exception(".env file not found. Searched in: " . implode(', ', $possiblePaths));
+            // No .env file found — continue with defaults defined in config.php
+            self::$loaded = true;
+            return;
         }
         
         $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -59,29 +61,9 @@ class EnvLoader {
     public static function get($key, $default = null) {
         $value = $_ENV[$key] ?? getenv($key) ?: $default;
 
-        // Debug logging for AWS credentials (in development only)
-        if (strpos($key, 'AWS_') === 0 && defined('APP_DEBUG') && APP_DEBUG) {
-            if (empty($value) && $default === null) {
-                error_log("EnvLoader: Missing environment variable '{$key}'");
-            }
-        }
+
 
         return $value;
     }
 
-    /**
-     * Check if all required AWS credentials are present
-     */
-    public static function hasAwsCredentials() {
-        $required = ['AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY', 'S3_BUCKET'];
-
-        foreach ($required as $key) {
-            $value = self::get($key);
-            if (empty($value)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }

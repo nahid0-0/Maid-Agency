@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: maid-agency
+    runtime: docker
+    plan: free
+    region: singapore
+    envVars:
+      - key: PORT
+        value: 80
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        generateValue: true
+      - key: DB_HOST
+        value: gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+      - key: DB_PORT
+        value: "4000"
+      - key: DB_NAME
+        value: maid_agency
+      - key: DB_USER
+        value: 28C3goSWvdwkZit.root
+      - key: DB_PASS
+        value: RdtV3fwLeRwoQ2Ln
+      - key: DB_SSL
+        value: "true"
+      - key: CLOUDINARY_CLOUD_NAME
+        value: wmi7nzcj
+      - key: CLOUDINARY_API_KEY
+        value: "788481521386239"
+      - key: CLOUDINARY_API_SECRET
+        value: DMugPdcjMDhJ10VSjzuHFpcF8ho

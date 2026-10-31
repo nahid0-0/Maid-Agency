@@ -4,7 +4,8 @@
     "type": "project",
     "require": {
         "php": ">=7.4",
-        "aws/aws-sdk-php": "^3.356"
+        "aws/aws-sdk-php": "^3.356",
+        "cloudinary/cloudinary_php": "^3.3"
     },
     "autoload": {
         "psr-4": {

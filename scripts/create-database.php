@@ -10,14 +10,33 @@ define('APP_ROOT', dirname(__DIR__));
 echo "Maid Agency Management System - Database Setup\n";
 echo "=============================================\n\n";
 
+// Load environment variables if available
+if (file_exists(APP_ROOT . '/app/Core/EnvLoader.php')) {
+    require_once APP_ROOT . '/app/Core/EnvLoader.php';
+    EnvLoader::load();
+}
+
+$host = getenv('DB_HOST') ?: '127.0.0.1';
+$port = getenv('DB_PORT') ?: '3306';
+$user = getenv('DB_USER') ?: 'root';
+$pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : 'root';
+
 // First, try to connect to MySQL without specifying a database
 try {
-    // Try different connection methods for XAMPP
-    $dsn = 'mysql:unix_socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock;charset=utf8mb4';
-    $pdo = new PDO($dsn, 'root', '', [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
+    try {
+        $dsn = "mysql:host={$host};port={$port};charset=utf8mb4";
+        $pdo = new PDO($dsn, $user, $pass, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]);
+    } catch (PDOException $tcpEx) {
+        // Fallback to XAMPP socket if TCP fails
+        $dsn = 'mysql:unix_socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock;charset=utf8mb4';
+        $pdo = new PDO($dsn, 'root', '', [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]);
+    }
     
     echo "✅ Connected to MySQL server\n";
     
